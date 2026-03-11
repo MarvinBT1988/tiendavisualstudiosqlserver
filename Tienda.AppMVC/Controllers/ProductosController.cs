@@ -21,7 +21,7 @@ namespace Tienda.AppMVC.Controllers
         // GET: Productos
         public async Task<IActionResult> Index()
         {
-            var tiendaDbContext = _context.Productos.Include(p => p.Categoria);
+            var tiendaDbContext = _context.Products.Include(p => p.Categoria);
             return View(await tiendaDbContext.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace Tienda.AppMVC.Controllers
                 return NotFound();
             }
 
-            var producto = await _context.Productos
+            var producto = await _context.Products
                 .Include(p => p.Categoria)
                 .FirstOrDefaultAsync(m => m.ProductoId == id);
             if (producto == null)
@@ -56,7 +56,7 @@ namespace Tienda.AppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductoId,Nombre,Precio,Stock,CategoriaId,FechaIngreso")] Producto producto)
+        public async Task<IActionResult> Create([Bind("ProductoId,Nombre,Precio,Stock,CategoriaId,FechaIngreso")] Product producto)
         {
             if (ModelState.IsValid)
             {
@@ -76,7 +76,7 @@ namespace Tienda.AppMVC.Controllers
                 return NotFound();
             }
 
-            var producto = await _context.Productos.FindAsync(id);
+            var producto = await _context.Products.FindAsync(id);
             if (producto == null)
             {
                 return NotFound();
@@ -90,7 +90,7 @@ namespace Tienda.AppMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Nombre,Precio,Stock,CategoriaId,FechaIngreso")] Producto producto)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductoId,Nombre,Precio,Stock,CategoriaId,FechaIngreso")] Product producto)
         {
             if (id != producto.ProductoId)
             {
@@ -129,7 +129,7 @@ namespace Tienda.AppMVC.Controllers
                 return NotFound();
             }
 
-            var producto = await _context.Productos
+            var producto = await _context.Products
                 .Include(p => p.Categoria)
                 .FirstOrDefaultAsync(m => m.ProductoId == id);
             if (producto == null)
@@ -145,10 +145,10 @@ namespace Tienda.AppMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var producto = await _context.Productos.FindAsync(id);
+            var producto = await _context.Products.FindAsync(id);
             if (producto != null)
             {
-                _context.Productos.Remove(producto);
+                _context.Products.Remove(producto);
             }
 
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace Tienda.AppMVC.Controllers
 
         private bool ProductoExists(int id)
         {
-            return _context.Productos.Any(e => e.ProductoId == id);
+            return _context.Products.Any(e => e.ProductoId == id);
         }
     }
 }
