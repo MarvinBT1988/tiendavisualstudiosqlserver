@@ -28,7 +28,7 @@ namespace Tienda.AppMVC.Controllers
                 query = query.Where(s => s.Nombre.Contains(categoriaSearch.Nombre));
             if (!string.IsNullOrWhiteSpace(categoriaSearch.Descripcion))
                 query = query.Where(s => s.Descripcion!.Contains(categoriaSearch.Descripcion));
-            query = query.Take(topRegistro);
+            query = query.Take(topRegistro).OrderByDescending(s=> s.CategoriaId);
             List<Categoria> categoria = await query.ToListAsync();
             return View(categoria);
         }
