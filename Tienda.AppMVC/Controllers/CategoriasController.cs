@@ -19,9 +19,18 @@ namespace Tienda.AppMVC.Controllers
         }
 
         // GET: Categorias
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Categoria? categoriaSearch, int topRegistro = 10)
         {
-            return View(await _context.Categorias.ToListAsync());
+            if (categoriaSearch == null)
+                categoriaSearch = new Categoria();
+            var query = _context.Categorias.AsQueryable();
+            if (!string.IsNullOrWhiteSpace(categoriaSearch.Nombre))
+                query = query.Where(s => s.Nombre.Contains(categoriaSearch.Nombre));
+            if (!string.IsNullOrWhiteSpace(categoriaSearch.Descripcion))
+                query = query.Where(s => s.Descripcion!.Contains(categoriaSearch.Descripcion));
+            query = query.Take(topRegistro);
+            List<Categoria> categoria = await query.ToListAsync();
+            return View(categoria);
         }
 
         // GET: Categorias/Details/5
