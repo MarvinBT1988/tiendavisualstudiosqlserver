@@ -21,8 +21,12 @@ namespace Tienda.AppMVC.Controllers
         // GET: Productos
         public async Task<IActionResult> Index()
         {
-            var tiendaDbContext = _context.Products.Include(p => p.Categoria);
-            return View(await tiendaDbContext.ToListAsync());
+            var query = _context.Products.AsQueryable();
+            query = query.Include(p => p.Categoria);
+            query = query.OrderByDescending(s=> s.Precio);
+          //  query = query.Where(s=> s.Nombre.Contains("f"));
+            var productos = await query.ToListAsync();
+            return View(productos);
         }
 
         // GET: Productos/Details/5
