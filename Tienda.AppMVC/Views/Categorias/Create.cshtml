@@ -1,4 +1,4 @@
-﻿@model Tienda.AppMVC.Models.Categoria
+﻿@model Categoria
 
 @{
     ViewData["Title"] = "Create";
@@ -35,4 +35,11 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function(){
+            alert("hola mundo");
+        });
+
+    </script>
 }
+
