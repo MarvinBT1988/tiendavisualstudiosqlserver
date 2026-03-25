@@ -1,109 +1,125 @@
 ﻿@model IEnumerable<Categoria>
 
 @{
-    ViewData["Title"] = "Buscar categorias";
+    ViewData["Title"] = "Buscar categorías";
 }
-<div class="container mt-4">
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <h5 class="card-title mb-3">Buscar Categorías</h5>
+
+<div class="container-fluid mt-4">
+    <div class="card shadow border-0 mb-4">
+        <div class="card-body p-4">
+            <h5 class="card-title mb-3 fw-bold text-dark">
+                <i class="bi bi-filter-square me-2 text-primary"></i>Buscar Categorías
+            </h5>
 
             <form asp-controller="Categorias" asp-action="Index" method="get">
                 <div class="row g-3 align-items-end">
                     <div class="col-md-3">
                         <label class="form-label fw-bold text-muted small">Nombre</label>
-                        <div class="input-group shadow-sm">
-                            <span class="input-group-text bg-white">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
                                 <i class="bi bi-tag text-primary"></i>
                             </span>
-                            <input type="text" name="Nombre" class="form-control"
+                            <input type="text" name="Nombre" class="form-control border-start-0 ps-0"
                                    placeholder="Ej: Electrónica..."/>
                         </div>
                     </div>
 
                     <div class="col-md-5">
                         <label class="form-label fw-bold text-muted small">Descripción</label>
-                        <div class="input-group shadow-sm">
-                            <span class="input-group-text bg-white">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
                                 <i class="bi bi-card-text text-primary"></i>
                             </span>
-                            <input type="text" name="Descripcion" class="form-control"
+                            <input type="text" name="Descripcion" class="form-control border-start-0 ps-0"
                                    placeholder="Buscar en la descripción..."  />
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <label class="form-label fw-bold text-muted small">Top registros</label>
-                        <div class="input-group shadow-sm">
-                            <span class="input-group-text bg-white">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
                                 <i class="bi bi-list-ol text-primary"></i>
                             </span>
-                            <select name="topRegistro" class="form-select">
+                            <select name="topRegistro" class="form-select border-start-0 ps-0">
                                 <option value="10" selected>10</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
-                                <option value="500">500</option>
-                                <option value="1000">1000</option>
-                                <option value="5000">5000</option>
                                 <option value="@int.MaxValue">Todos</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="row g-3">
-                    <div class="row mt-4">
-                        <div class="col-12 d-flex justify-content-start align-items-center gap-2">
 
-                            <button type="submit" class="btn btn-primary px-4 shadow-sm fw-bold">
-                                <i class="bi bi-search me-2"></i>Buscar
-                            </button>
+                <div class="row mt-4">
+                    <div class="col-12 d-flex gap-2">
+                        <button type="submit" class="btn btn-primary px-4 shadow-sm fw-bold hover-elevate">
+                            <i class="bi bi-search me-2"></i>Buscar
+                        </button>
 
-                            <a asp-action="Create" class="btn btn-outline-success px-4 shadow-sm">
-                                <i class="bi bi-plus-lg me-2"></i>Añadir Nueva Categoría
-                            </a>
-
-                        </div>
+                        <a asp-action="Create" class="btn btn-success px-4 shadow-sm fw-bold hover-elevate">
+                            <i class="bi bi-plus-circle me-2"></i>Nueva Categoría
+                        </a>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">@Html.DisplayNameFor(model => model.Nombre)</th>
+                        <th>@Html.DisplayNameFor(model => model.Descripcion)</th>
+                        <th>@Html.DisplayNameFor(model => model.FechaCreacion)</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="ps-4 fw-bold text-dark">@Html.DisplayFor(modelItem => item.Nombre)</td>
+                            <td class="text-muted">@Html.DisplayFor(modelItem => item.Descripcion)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FechaCreacion)</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a asp-action="Edit" asp-route-id="@item.CategoriaId" class="btn btn-outline-primary" title="Editar">
+                                        <i class="bi bi-pencil-square me-1"></i> Editar
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.CategoriaId" class="btn btn-outline-info" title="Detalles">
+                                        <i class="bi bi-eye me-1"></i> Detalles
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.CategoriaId" class="btn btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash me-1"></i> Borrar
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaCreacion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaCreacion)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.CategoriaId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.CategoriaId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CategoriaId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<style>
+    /* Efecto de elevación para botones */
+    .hover-elevate {
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .hover-elevate:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15) !important;
+    }
+    /* Estilo para la cabecera de la tabla */
+    .table thead th {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        border-bottom: 2px solid #dee2e6;
+    }
+</style>

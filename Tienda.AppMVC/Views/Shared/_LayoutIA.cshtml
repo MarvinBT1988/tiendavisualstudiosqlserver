@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tienda.AppMVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        #wrapper { display: flex; width: 100%; align-items: stretch; min-height: 100vh; }
+        
+        /* Sidebar - Negro Claro */
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: #212529;
+            color: #ffffff;
+            transition: all 0.3s;
+        }
+        #sidebar.active { margin-left: -250px; }
+        
+        /* Enlaces del Sidebar */
+        #sidebar .nav-link { 
+            color: rgba(255,255,255,0.8); 
+            margin-bottom: 5px; 
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        #sidebar .nav-link:hover { background-color: rgba(255,255,255,0.1); color: #fff; }
+        #sidebar .nav-link i:first-child { margin-right: 10px; width: 20px; }
+
+        /* Estilos para el Submenu */
+        .submenu {
+            list-style: none;
+            padding-left: 30px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        .submenu .nav-link { font-size: 0.9rem; }
+
+        /* Rotación de la flecha del submenu */
+        .dropdown-toggle::after {
+            display: inline-block;
+            margin-left: auto;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid;
+            border-right: 0.3em solid transparent;
+            border-bottom: 0;
+            border-left: 0.3em solid transparent;
+            transition: transform 0.3s;
+        }
+        .dropdown-toggle[aria-expanded="true"]::after { transform: rotate(180deg); }
+
+        /* Navbar - Azul Claro */
+        .custom-navbar { background-color: #e3f2fd !important; border: 1px solid #dee2e6; }
+        #content { width: 100%; padding: 20px; background-color: #fcfcfc; }
+    </style>
+</head>
+<body>
+
+    <div id="wrapper">
+        <nav id="sidebar" class="p-3">
+            <div class="sidebar-header mb-4">
+                <h4 class="mb-0" style="color: #0d6efd;">Tienda</h4>
+            </div>
+
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Index">
+                        <i class="bi bi-house-door"></i> Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle" data-bs-toggle="collapse" href="#mantenimientoMenu" role="button" aria-expanded="false">
+                        <i class="bi bi-gear"></i> Mantenimientos
+                    </a>
+                    <div class="collapse" id="mantenimientoMenu">
+                        <ul class="submenu nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Categorias" asp-action="Index">
+                                    <i class="bi bi-tags"></i> Categorias
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Productos" asp-action="Index">
+                                    <i class="bi bi-box-seam"></i> Productos
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Home" asp-action="Privacy">
+                        <i class="bi bi-shield-lock"></i> Privacy
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div id="content">
+            <nav class="navbar navbar-light custom-navbar mb-4 rounded shadow-sm">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <span class="navbar-brand ms-3 fw-bold">Tienda.AppMVC</span>
+                </div>
+            </nav>
+
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
