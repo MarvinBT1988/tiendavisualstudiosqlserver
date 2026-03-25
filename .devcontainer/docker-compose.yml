@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  app:
+    image: mcr.microsoft.com/dotnet/sdk:10.0-preview
+    volumes:
+      - ..:/workspace
+    working_dir: /workspace
+    command: sleep infinity
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+    ports:
+      - "1433:1433"
