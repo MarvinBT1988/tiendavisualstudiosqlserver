@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\ScriptDB\" />
     <Folder Include="wwwroot\kaiadmin\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
