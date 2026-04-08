@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table jspaginacion">
     <thead>
         <tr>
             <th>
@@ -57,3 +57,8 @@
 }
     </tbody>
 </table>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_Paginacion");
+    }
+}

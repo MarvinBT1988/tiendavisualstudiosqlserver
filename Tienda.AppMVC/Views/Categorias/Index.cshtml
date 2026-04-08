@@ -68,7 +68,7 @@
 
     <div class="card shadow-sm border-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+            <table class="table table-hover align-middle mb-0 jspaginacion">
                 <thead class="bg-light">
                     <tr>
                         <th class="ps-4">@Html.DisplayNameFor(model => model.Nombre)</th>
@@ -123,3 +123,6 @@
         border-bottom: 2px solid #dee2e6;
     }
 </style>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_Paginacion");}
+}
